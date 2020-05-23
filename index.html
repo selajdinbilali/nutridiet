@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutri-Diet</title>
+
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+
+                <style>
+                    input[type=submit]{
+                        color:white;
+                    }
+
+                    
+                    .rcal{
+                        text-align: center;
+                        background-color: rgb(35, 156, 100);
+                        padding-bottom: 1.5rem;
+                    }
+                    .lcal{
+                        text-align: start;
+                        padding-left: 1rem;
+                        color: white;
+
+                    }
+                    #cal{
+                        
+                        margin: 0 auto;
+                        color:white;
+                        font-size: 3rem;
+                    }
+                    .macros{
+                        display:grid;
+                        grid-template-columns: 1fr 1fr 1fr;
+                    }
+
+                    .macros > div {
+                        background-color: rgb(184, 63, 63);
+                        color: white;
+                        font-size: 2rem;
+                        text-align: center;
+                        padding-bottom: 1.25rem;
+                    }
+
+                    .macros > div > div {
+                        padding-top: 1rem;
+                        font-size: 1rem;
+                        
+                        text-align: center;
+                    }
+
+                    .macros > div > div + div{
+                        font-size: 3rem;
+                        padding-top: 0;
+                        padding-left: 0;
+                        text-align: center;
+                    }
+
+                   
+
+                </style>
+            
+</head>
+<body>
+    <div class="container">
+        <div class="col s12">
+            <h6>Nutri-Diet</h6>
+            <h5 id="res"></h5>
+            
+        </div>
+        <div class="row">
+            <form id="myForm" class="col s12">
+                <div class="row">
+
+                
+                    <div class="input-field col s4">
+                        <input id="weight" type="number" step="0.01" class="validate">
+                        <label for="weight">Weight in kg</label>
+                    </div>
+                    <div class="input-field col s4">
+                        <input id="height" type="number" class="validate">
+                        <label for="height">height in cm</label>
+                    </div>
+                    <div class="input-field col s4">
+                        <input id="age" type="number" class="validate">
+                        <label for="age">age</label>
+                    </div>
+                </div>
+                
+                <div class="row">
+
+                
+                    
+                    
+
+                    <div class="input-field col s6">
+                        <select id="sex">
+                          <option value="" disabled selected>Choose your option</option>
+                          <option value="5">Man</option>
+                          <option value="-161">Woman</option>
+                        </select>
+                        <label>Sex</label>
+                    </div>
+
+                    <div class="input-field col s6">
+                        <select id="activity">
+                          <option value="" disabled selected>Choose your option</option>
+                          
+                          <option value="1.2">Sedentary</option>
+                        </select>
+                        <label>Activity level</label>
+                    </div>
+
+                </div>
+
+                
+
+                <div class="row">
+
+                
+                    <div class="input-field col s12">
+                        <input class="waves-effect waves-light btn-small" type="submit" value="Calculate">
+                    </div>
+                    
+                </div>
+
+
+            </form>
+
+
+            <div class="row">
+                <div class="col s12 result">
+                    <div class="rcal">
+                        <div class="lcal">Cal.</div>
+                        <span id="cal">333</span>
+                    </div>
+                    <div class="macros">
+                        <div class="protsw">
+                            <div class="plabel">Prots</div>
+                            <div id="prots"></div>
+                        </div>
+                        <div class="carbsw">
+                            <div class="clabel">Carbs</div>
+                            <div id="carbs"></div>
+                        </div>
+                        <div class="fatsw">
+                            <div class="flabel">Fats</div>
+                        <div id="fats"></div>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+
+                
+                
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col s12">
+                    <ul>
+                        <li>
+                            Formula used : <a href="https://en.wikipedia.org/wiki/Basal_metabolic_rate#BMR_estimation_formulas">The Mifflin St Jeor Equation</a>
+                        </li>
+                        <li>
+                            Research used for deficit in calories : <a href="https://www.ncbi.nlm.nih.gov/pubmed/21558571">Effect of two different weight-loss rates on body composition and strength and power-related performance in elite athletes.</a>
+                        </li>
+                        <li>
+                            Article used for protein intake : <a href="https://mennohenselmans.com/the-myth-of-1glb-optimal-protein-intake-for-bodybuilders/">The myth of 1 g/lb: Optimal protein intake for bodybuilders</a>
+                        </li>
+                        <li>
+                            Article used for activity levels : <a href="https://globalrph.com/medcalcs/resting-metabolic-rate-rmr/">RESTING METABOLIC RATE (RMR)</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+    </div>
+
+
+            <!-- Compiled and minified JavaScript -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+            
+
+
+            <script>
+                  document.addEventListener('DOMContentLoaded', function() {
+                    var elems = document.querySelectorAll('select');
+                    var instances = M.FormSelect.init(elems);
+                    });
+
+                    
+            </script>
+
+            <script>
+                var res = {name: 'Browser window size', value: window.innerWidth + 'x' + window.innerHeight};
+                document.getElementById('res').innerHTML = JSON.stringify(res.value);
+            </script>
+
+            <script>
+                var weight = window.localStorage.getItem('weight');
+                document.getElementById("weight").value = weight;
+
+                var height = window.localStorage.getItem('height');
+                document.getElementById("height").value = height;
+                var age = window.localStorage.getItem('age');
+                document.getElementById("age").value = age;
+                var sex = window.localStorage.getItem('sex');
+                document.getElementById("sex").value = sex;
+                var activity = window.localStorage.getItem('activity');
+                document.getElementById("activity").value = activity;
+                var cal = window.localStorage.getItem('cal');
+                document.getElementById("cal").innerHTML = cal;
+
+                var fats = window.localStorage.getItem('fats');
+                document.getElementById("fats").innerHTML = fats;
+
+                var prots = window.localStorage.getItem('prots');
+                document.getElementById("prots").innerHTML = prots;
+
+                var carbs = window.localStorage.getItem('carbs');
+                document.getElementById("carbs").innerHTML = carbs;
+
+
+                var deficit = 0.81;
+
+                document.getElementById('myForm').addEventListener('submit', (event) => {
+                    event.preventDefault();
+                    weight = document.getElementById("weight").value;
+                    window.localStorage.setItem('weight', weight);
+
+                    height = document.getElementById("height").value;
+                    window.localStorage.setItem('height', height);
+
+                    age = document.getElementById("age").value;
+                    window.localStorage.setItem('age', age);
+
+                    sex = document.getElementById("sex").value;
+                    window.localStorage.setItem('sex', sex);
+
+                    activity = document.getElementById("activity").value;
+                    window.localStorage.setItem('activity', activity);
+                    
+                    
+
+                    //cal = (((10 * weight) + (6.25 * height) - (5 * age) + 5) * activity) * deficit;
+                    cal = 10 * weight;
+                    cal += 6.25 * height;
+                    cal -= 5 * age;
+                    cal += 1 * sex;
+                    cal *= activity;
+                    cal *= deficit;
+
+                    cal = (Math.round(cal * 100) / 100).toFixed(0);
+                    window.localStorage.setItem('cal', cal);
+                    document.getElementById("cal").innerHTML = cal;
+
+                    fats = cal * 0.2 / 9;
+                    prots = weight * 1.6;
+                    carbs = (cal - (prots * 4) - (fats*9))/4;
+
+                    fats = (Math.round(fats * 100) / 100).toFixed(0);
+                    prots = (Math.round(prots * 100) / 100).toFixed(0);
+                    carbs = (Math.round(carbs * 100) / 100).toFixed(0);
+
+                    document.getElementById("fats").innerHTML = fats;
+                    window.localStorage.setItem('fats', fats);
+                    document.getElementById("prots").innerHTML = prots;
+                    window.localStorage.setItem('prots', prots);
+                    document.getElementById("carbs").innerHTML = carbs;
+                    window.localStorage.setItem('carbs', carbs);
+                
+
+                });
+
+            </script>
+</body>
+</html>
